@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://unpkg.com/buefy/dist/buefy.min.css">
+</head>
+
+<body>
+    <div id="app">
+        <!-- Buefy components goes here -->
+        <template>
+            <section>
+                <div class="columns">
+                    <div class="column is-two-fifths is-offset-one-quarter has-background-light">
+                       
+                       <p class="title is-3 has-text-centered has-text-primary">Formulario de Registro</p>
+
+                       <b-field grouped>
+                           <b-field label="Nombre">
+                                <b-input v-model="nombre" type="text" placeholder="Ingrese Nombre.."></b-input>
+                            </b-field>
+                            <b-field label="Apellido">
+                                <b-input v-model="apellido" type="text" placeholder="Ingrese Apellido.."></b-input>
+                            </b-field>
+                       </b-field>
+                        
+
+                        <b-field label="Correo Electronico">
+                            <b-input v-model="email" type="email" placeholder="Ingrese Correo.."></b-input>
+                        </b-field>
+
+                        <b-field label="Contraseña">
+                            <b-input v-model="password" type="password" placeholder="Ingrese Password.."></b-input>
+                        </b-field>
+
+                        <b-field class="has-text-centered">
+                            <b-button type="is-success" @click="registro"> 
+                                Registrate
+                            </b-button>
+                        </b-field>
+                        
+                    </div>
+                </div>
+        	</section>
+        </template>
+    </div>
+
+    <script src="https://unpkg.com/vue"></script>
+    <!-- Full bundle -->
+    <script src="https://unpkg.com/buefy/dist/buefy.min.js"></script>
+
+    <!-- Individual components -->
+    <script src="https://unpkg.com/buefy/dist/components/table"></script>
+    <script src="https://unpkg.com/buefy/dist/components/input"></script>
+
+    <script>
+        new Vue({
+            el: '#app',
+            data() {
+	            return {
+                        isFullPage: true,
+	                	nombre: '',
+                        apellido: '',
+                        email: '',
+                        password: ''
+	            }
+	        },
+	        methods:{
+	        	
+	        	registro(){
+                    const loadingComponent = this.$buefy.loading.open({
+                    container: this.isFullPage ? null : this.$refs.element.$el
+                    })
+
+                    setTimeout(() => loadingComponent.close(), 3 * 1000);
+
+	        		window.location.href = "./index.html"
+	        	}
+	        }
+
+        })
+    </script>
+</body>
+</html>

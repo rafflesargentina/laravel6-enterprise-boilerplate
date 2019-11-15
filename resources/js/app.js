@@ -4,9 +4,20 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
+/*import Vue from 'vue'*/
+import Buefy from 'buefy'
+import 'buefy/dist/buefy.css'
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { fas } from "@fortawesome/free-solid-svg-icons";
+import { far } from "@fortawesome/free-regular-svg-icons";
+
 require('./bootstrap');
 
 window.Vue = require('vue');
+
+
+Vue.use(Buefy);
+library.add(fas, far)
 
 /**
  * The following block of code may be used to automatically register your
