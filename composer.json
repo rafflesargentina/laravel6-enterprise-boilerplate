@@ -10,6 +10,7 @@
     "require": {
         "php": "^7.2",
         "caffeinated/modules": "^6.0",
+        "caffeinated/shinobi": "^5.0",
         "caouecs/laravel-lang": "^4.0",
         "fideloper/proxy": "^4.0",
         "laravel/framework": "^6.2",
