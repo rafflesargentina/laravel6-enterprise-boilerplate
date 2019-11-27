@@ -14,13 +14,15 @@ class CreatePermissionsTable extends Migration
     {
         $name = config('shinobi.tables.permissions');
 
-        Schema::create($name, function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('name');
-            $table->string('slug')->unique();
-            $table->text('description')->nullable();
-            $table->timestamps();
-        });
+        Schema::create(
+            $name, function (Blueprint $table) {
+                $table->bigIncrements('id');
+                $table->string('name');
+                $table->string('slug')->unique();
+                $table->text('description')->nullable();
+                $table->timestamps();
+            }
+        );
     }
 
     /**
