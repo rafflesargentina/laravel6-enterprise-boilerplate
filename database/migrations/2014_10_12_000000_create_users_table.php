@@ -28,7 +28,8 @@ class CreateUsersTable extends Migration
                 $table->string('provider_id')->nullable();
                 $table->string('provider')->nullable();
                 $table->boolean('blocked')->nullable()->default(0);
-                $table->timestamps();
+		$table->timestamps();
+		$table->softDeletes();
             }
         );
     }
