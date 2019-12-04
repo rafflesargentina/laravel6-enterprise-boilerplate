@@ -11,14 +11,9 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/auth/{provider}', 'Auth\SocialController@redirectToProvider');
+Route::get('/{catchall?}', 'HomeController')->where('catchall', '^(?!api).*$')->name('home');
 
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
+Route::post('/auth/{provider}/callback', 'Auth\SocialController@handleProviderCallback');
