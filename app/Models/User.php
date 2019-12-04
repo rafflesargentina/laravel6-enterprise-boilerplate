@@ -4,7 +4,7 @@ namespace App\Models;
 
 use App\Models\Traits\UserTrait;
 
-use Caffeinated\Shinobi\Traits\ShinobiTrait;
+use Caffeinated\Shinobi\Concerns\HasRolesAndPermissions;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -13,7 +13,7 @@ use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, Notifiable, ShinobiTrait, SoftDeletes, UserTrait;
+    use HasApiTokens, HasRolesAndPermissions, Notifiable, SoftDeletes, UserTrait;
 
     /**
      * The attributes that should be cast to native types.
