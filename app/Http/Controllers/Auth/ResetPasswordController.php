@@ -3,7 +3,14 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Traits\FormatsValidJsonResponses;
+
+use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Foundation\Auth\ResetsPasswords;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Str;
 
 class ResetPasswordController extends Controller
 {
@@ -18,12 +25,59 @@ class ResetPasswordController extends Controller
     |
     */
 
-    use ResetsPasswords;
+    use FormatsValidJsonResponses, ResetsPasswords;
 
     /**
      * Where to redirect users after resetting their password.
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/';
+
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('guest');
+    }
+
+    /**
+     * Reset the given user's password.
+     *
+     * @param  \Illuminate\Contracts\Auth\CanResetPassword $user
+     * @param  string                                      $password
+     * @return void
+     */
+    protected function resetPassword($user, $password)
+    {
+        $user->password = $password;
+        $user->setRememberToken(Str::random(60));
+        $user->save();
+
+        event(new PasswordReset($user));
+
+        if (!request()->wantsJson()) {
+            $this->guard()->login($user);
+        }
+    }
+
+    /**
+     * Get the response for a successful password reset.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @param  string                   $response
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
+     */
+    protected function sendResetResponse(Request $request, $response)
+    {
+        if ($request->wantsJson()) {
+            return $this->validSuccessJsonResponse(trans($response), [], $this->redirectPath());
+        }
+
+        return redirect($this->redirectPath())
+            ->with('status', trans($response));
+    }
 }
